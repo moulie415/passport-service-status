@@ -6,6 +6,14 @@ import 'dotenv/config'
 
  const courier = CourierClient(
    { authorizationToken: process.env.AUTH_TOKEN });
+
+
+  const logger = winston.createLogger({
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: 'combined.log' })
+    ]
+  });
  
 const app = express()
 const port = 3000
@@ -39,12 +47,14 @@ app.listen(port, () => {
       const res = await axios.get('https://www.passportappointment.service.gov.uk');
       if (error) {
         data = JSON.stringify(res.data);
+        logger.info(`${new Date().toISOString()}${res.status}`)
         await sendEmails(
           `Website recovered from error, status : ${res.status}\n
           data: ${data}
         `)
       } else if (JSON.stringify(res.data) !== data) {
         data = JSON.stringify(res.data);
+        logger.info(`${new Date().toISOString()}${res.status}`)
         await sendEmails(
           `status : ${res.status}\n
           data: ${data}
@@ -57,6 +67,8 @@ app.listen(port, () => {
       }
       error = true;
       console.log(e.message)
+      logger.error(`${new Date().toISOString()} ${e.message}`)
+      
     }
   }
   getResponse();
