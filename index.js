@@ -1,6 +1,7 @@
 import axios from 'axios'
 import express from 'express'
 import { CourierClient } from "@trycourier/courier";
+import 'dotenv/config'
 
  const courier = CourierClient(
    { authorizationToken: process.env.AUTH_TOKEN });
