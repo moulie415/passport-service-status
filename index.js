@@ -27,20 +27,6 @@ const sendEmails = async (body) => {
       }
     });
   }))
-  // const { requestId } = await courier.send({
-  //   message: {
-  //     content: {
-  //       title: "Passport appointment service",
-  //       body: "Want to hear a joke? {{joke}}"
-  //     },
-  //     // data: {
-  //     //   joke: "Why was the JavaScript developer sad? Because they didn't Node how to Express themselves"
-  //     // },
-  //     to: {
-  //       email: "hen10@hotmail.co.uk"
-  //     }
-  //   }
-  // });
 }
 
 app.listen(port, () => {
